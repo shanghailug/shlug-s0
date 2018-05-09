@@ -1,0 +1,18 @@
+name:                shlug-s0
+version:             0.1.0.0
+license:             GPL-3
+license-file:        LICENSE
+author:              Yu Changyuan
+maintainer:          reivzy@gmail.com
+category:            Web
+build-type:          Simple
+extra-source-files:  ChangeLog.md
+cabal-version:       >=1.10
+
+executable shlug-s0
+  main-is:             Main.hs
+  build-depends:       base >=4.10 && <4.11, 
+                       yesod, aeson, text, time, directory, random,
+                       wai, network, sockaddr, bytestring
+  hs-source-dirs:      src
+  default-language:    Haskell2010
