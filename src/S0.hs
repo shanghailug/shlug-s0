@@ -56,7 +56,8 @@ addS0Rec' dir name email ip = do
    -- NOTE: should cache, here just read files again
    codes <- readS0Rec dir >>= (return . map T.code)
 
-   let code = if null codes then "aaa" else incCode $ last $ sort codes
+   let code = if null codes then "aaa" else incCode $
+                 reverse $ last $ sort (map reverse codes)
 
    ridx <- randomRIO (0, 14)
    let value = [2,2,2,2,2,2,2,2
