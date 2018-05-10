@@ -1,6 +1,6 @@
 { mkDerivation, stdenv, base, yesod, wai,
   aeson, text, time, directory, random,
-  network, sockaddr
+  network, sockaddr, strict
 }:
 mkDerivation {
   pname = "shlug-s0";
@@ -8,7 +8,7 @@ mkDerivation {
   src = ./.;
   isLibrary = false;
   isExecutable = true;
-  executableHaskellDepends = [ base yesod aeson text time
+  executableHaskellDepends = [ base yesod aeson text time strict
                                directory random network sockaddr ];
   license = stdenv.lib.licenses.gpl3;
 }

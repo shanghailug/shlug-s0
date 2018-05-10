@@ -20,6 +20,8 @@ import Data.List (sort)
 
 import System.Random (randomRIO)
 
+import qualified System.IO.Strict as SIO
+
 todoDir = "todo"
 doneDir = "done"
 
@@ -29,10 +31,10 @@ readS0RecDir dir = do
   createDirectoryIfMissing True dir
 
   files <- listDirectory dir
-  fmap join $ mapM (\f -> readFile (dir ++ "/" ++ f) >>=
+  -- NOTE: should make result strict, or else will leave file open
+  fmap join $ mapM (\f -> SIO.readFile (dir ++ "/" ++ f) >>=
                           (return . take 2000) >>=
                           (return . fmap fst . reads)) files
-
 
 readS0Rec :: FilePath -> IO [S0Rec]
 readS0Rec dir = do
