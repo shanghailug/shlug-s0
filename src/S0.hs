@@ -32,9 +32,10 @@ readS0RecDir dir = do
 
   files <- listDirectory dir
   -- NOTE: should make result strict, or else will leave file open
-  fmap join $ mapM (\f -> SIO.readFile (dir ++ "/" ++ f) >>=
-                          (return . take 2000) >>=
-                          (return . fmap fst . reads)) files
+  recList <- join <$> mapM (\f -> (SIO.readFile $ dir ++ "/" ++ f) >>=
+                                  (return . lines))
+                           files
+  return $ join $ map (fmap fst . reads) recList
 
 readS0Rec :: FilePath -> IO [S0Rec]
 readS0Rec dir = do
@@ -76,7 +77,7 @@ addS0Rec' dir name email ip = do
                  , T.confirmed = False }
 
    -- write to file
-   writeFile (dir ++ "/" ++ todoDir ++ "/" ++ code) $ show r
+   writeFile (dir ++ "/" ++ todoDir ++ "/" ++ code) $ show r ++ "\n"
 
    return r
 
